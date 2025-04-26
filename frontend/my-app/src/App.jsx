@@ -191,10 +191,10 @@ function App() {
           path="/Api"
           element={<GraphXAPIDocumentation isDarkMode={darkMode} />}
         />
-        {/* <Route
+        <Route
           path="/settings"
           element={<MaintenancePage isDarkMode={darkMode} />}
-        /> */}
+        />
 
         {/* Special Routes */}
         <Route

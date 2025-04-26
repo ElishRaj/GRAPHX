@@ -50,7 +50,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
   useEffect(() => {
     const path = location.pathname.toLowerCase();
     const index = navItems.findIndex(
-      (item) =>
+      (item) => 
         path === `/${item.toLowerCase()}` || (item === "Home" && path === "/")
     );
     if (index >= 0) {

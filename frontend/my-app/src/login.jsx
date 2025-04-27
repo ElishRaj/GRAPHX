@@ -37,7 +37,7 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:30000/login`,
+        `https://graphx-yky3.onrender.com/login`,
         {
           email,
           password,
@@ -65,7 +65,7 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = `http://localhost:30000/auth/google`;
+    window.location.href = `https://graphx-yky3.onrender.com/auth/google`;
   };
 
   // Check if user is already logged in
@@ -73,7 +73,7 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
     const checkAuth = async () => {
       try {
         const response = await axios.get(
-          ` http://localhost:30000/auth/status`,
+          ` https://graphx-yky3.onrender.com/auth/status`,
           {
             withCredentials: true,
           }

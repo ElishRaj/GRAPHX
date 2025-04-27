@@ -4,14 +4,14 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://graphx.onrender.com",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-        secure: false,
-      },
-    },
-  },
+  // server: {
+  //   // proxy: {
+  //   //   "/api": {
+  //   //     target: "https://graphx-yky3.onrender.com",
+  //   //     changeOrigin: true,
+  //   //     rewrite: (path) => path.replace(/^\/api/, ""),
+  //   //     secure: false,
+  //   //   },
+  //   // },
+  // },
 });

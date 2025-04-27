@@ -11,9 +11,12 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await axios.get("http://localhost:30000/auth/status", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "https://graphx-yky3.onrender.com/auth/status",
+        {
+          withCredentials: true,
+        }
+      );
 
       setIsAuthenticated(response.data.isAuthenticated);
       if (response.data.user) {
@@ -44,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post(
-        " http://localhost:30000/logout",
+        "https://graphx-yky3.onrender.com/logout",
         {},
         {
           withCredentials: true,

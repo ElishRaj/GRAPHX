@@ -25,7 +25,7 @@ const Loading = ({ darkMode, onComplete }) => {
 
     const messageInterval = setInterval(() => {
       setMessage(messages[Math.floor(Math.random() * messages.length)]);
-    }, 2000);
+    }, 500);
 
     return () => {
       clearInterval(progressInterval);

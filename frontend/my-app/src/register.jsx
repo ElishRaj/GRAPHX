@@ -21,7 +21,7 @@ const RegisterForm = ({ isDarkMode, onRegisterSuccess }) => {
 
     try {
       const response = await axios.post(
-        " http://localhost:30000/register",
+        "https://graphx-yky3.onrender.com/register",
         { email, password },
         { withCredentials: true }
       );
@@ -41,14 +41,14 @@ const RegisterForm = ({ isDarkMode, onRegisterSuccess }) => {
   };
 
   const handleGoogleAuth = () => {
-    window.location.href = " http://localhost:30000/auth/google";
+    window.location.href = " https://graphx-yky3.onrender.com/auth/google";
   };
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const response = await axios.get(
-          " http://localhost:30000/auth/status",
+          "https://graphx-yky3.onrender.com/auth/status",
           {
             withCredentials: true,
           }

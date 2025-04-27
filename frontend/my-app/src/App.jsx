@@ -36,7 +36,7 @@ function App() {
       const timer = setTimeout(() => {
         setAppLoading(false);
         sessionStorage.setItem("hasShownLoading", "true");
-      }, 1000);
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -50,7 +50,7 @@ function App() {
 
     try {
       const response = await axios.get(
-        " http://localhost:30000/api/subscription",
+        " https://graphx-yky3.onrender.com/api/subscription",
         { withCredentials: true }
       );
       setPremier(!!response.data.subscription?.plan);

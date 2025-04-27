@@ -72,7 +72,7 @@ const Pricing = ({ isDarkMode,onPlanPurchase }) => {
     try {
       setSubscription((prev) => ({ ...prev, loading: true, error: null }));
       const response = await axios.get(
-        "https://graphx-yky3.onrender.com/api/subscription",
+        "http://localhost:30000/api/subscription",
         {
           withCredentials: true,
         }
@@ -151,7 +151,7 @@ const Pricing = ({ isDarkMode,onPlanPurchase }) => {
 
     try {
       const response = await axios.post(
-        "https://graphx-yky3.onrender.com/api/payment/create-order",
+        "http://localhost:30000/api/payment/create-order",
         { plan },
         {
           withCredentials: true,
@@ -175,7 +175,7 @@ const Pricing = ({ isDarkMode,onPlanPurchase }) => {
         handler: async function (razorpayResponse) {
           try {
             const verificationResponse = await axios.post(
-              "https://graphx-yky3.onrender.com/api/payment/verify",
+              "http://localhost:30000/api/payment/verify",
               {
                 razorpay_payment_id: razorpayResponse.razorpay_payment_id,
                 razorpay_order_id: razorpayResponse.razorpay_order_id,
@@ -259,7 +259,7 @@ const Pricing = ({ isDarkMode,onPlanPurchase }) => {
 
     try {
       const response = await axios.post(
-        "https://graphx-yky3.onrender.com/api/payment/switch-plan",
+        "http://localhost:30000/api/payment/switch-plan",
         {
           newPlan: activePlan,
           currentPlan: subscription.plan,
@@ -287,7 +287,7 @@ const Pricing = ({ isDarkMode,onPlanPurchase }) => {
           handler: async function (razorpayResponse) {
             try {
               const verificationResponse = await axios.post(
-                "https://graphx-yky3.onrender.com/api/payment/verify-switch",
+                "http://localhost:30000/api/payment/verify-switch",
                 {
                   razorpay_payment_id: razorpayResponse.razorpay_payment_id,
                   razorpay_order_id: razorpayResponse.razorpay_order_id,

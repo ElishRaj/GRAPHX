@@ -1074,8 +1074,7 @@ const song = {
   lyrics: "The club isn't the best place to find a lover, so the bar is where I go...",
   link: "https://example.com/song.mp3" // You can add your own mp3 URL
 };
-
-router.get('/song', (req, res) => {
+app.get('/song', (req, res) => {
   res.json({
     success: true,
     data: song

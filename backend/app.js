@@ -1067,6 +1067,20 @@ const server = app
       process.exit(1);
     }
   });
+  // Sample song data (you can replace this with DB data or a file)
+const song = {
+  title: "Shape of You",
+  artist: "Ed Sheeran",
+  lyrics: "The club isn't the best place to find a lover, so the bar is where I go...",
+  link: "https://example.com/song.mp3" // You can add your own mp3 URL
+};
+
+router.get('/song', (req, res) => {
+  res.json({
+    success: true,
+    data: song
+  });
+});
 app.use("/chartRoutes", chartRoutes);
 app.use("/ap", graphRouter);
 // Graceful shutdown

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "./auth";
 import Navbar from "./Nav";
@@ -25,7 +25,19 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [appLoading, setAppLoading] = useState(true);
   const [premier, setPremier] = useState(false);
+  const [showLoginSuccess, setShowLoginSuccess] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Show login success message if URL has login_success param
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.has("login_success")) {
+      setShowLoginSuccess(true);
+      const timer = setTimeout(() => setShowLoginSuccess(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.search]);
 
   // Loading animation control (shows only once per session)
   useEffect(() => {
@@ -50,7 +62,7 @@ function App() {
 
     try {
       const response = await axios.get(
-        " http://localhost:30000/api/subscription",
+        "http://localhost:30000/api/subscription",
         { withCredentials: true }
       );
       setPremier(!!response.data.subscription?.plan);
@@ -66,8 +78,8 @@ function App() {
   }, [fetchSubscription]);
 
   const handleLoginSuccess = (user) => {
-    // Refresh subscription status after login
     fetchSubscription();
+    navigate("/dashboard?login_success=true");
   };
 
   const handlePlanPurchase = useCallback(() => {
@@ -77,6 +89,30 @@ function App() {
   if (authLoading || appLoading) {
     return <Loading darkMode={darkMode} />;
   }
+
+  // Dashboard component to avoid duplication
+  const Dashboard = () => (
+    <>
+      {showLoginSuccess && (
+        <div
+          className={`fixed top-20 right-4 px-4 py-2 rounded-md z-50 ${
+            darkMode ? "bg-green-700 text-white" : "bg-green-500 text-white"
+          }`}
+        >
+          Login successful!
+        </div>
+      )}
+      <AnimationPage isDarkMode={darkMode} />
+      <VisualizeData isDarkMode={darkMode} premier={premier} />
+      <AchievementsSection isDarkMode={darkMode} />
+      <StepsComponent isDarkMode={darkMode} />
+      <Footer
+        isDarkMode={darkMode}
+        user={isAuthenticated ? userData : null}
+        onLoginRequest={() => navigate("/login")}
+      />
+    </>
+  );
 
   return (
     <div
@@ -94,38 +130,10 @@ function App() {
 
       <Routes>
         {/* Public Routes */}
-        <Route
-          path="/"
-          element={
-            <>
-              <AnimationPage isDarkMode={darkMode} />
-              <VisualizeData isDarkMode={darkMode} premier={premier} />
-              <AchievementsSection isDarkMode={darkMode} />
-              <StepsComponent isDarkMode={darkMode} />
-              <Footer
-                isDarkMode={darkMode}
-                user={isAuthenticated ? userData : null}
-                onLoginRequest={() => navigate("/login")}
-              />
-            </>
-          }
-        />
-        <Route
-          path="/home"
-          element={
-            <>
-              <AnimationPage isDarkMode={darkMode} />
-              <VisualizeData isDarkMode={darkMode} premier={premier} />
-              <AchievementsSection isDarkMode={darkMode} />
-              <StepsComponent isDarkMode={darkMode} />
-              <Footer
-                isDarkMode={darkMode}
-                user={isAuthenticated ? userData : null}
-                onLoginRequest={() => navigate("/login")}
-              />
-            </>
-          }
-        />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/home" element={<Dashboard />} />
+
         <Route
           path="/prices"
           element={

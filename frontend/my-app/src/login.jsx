@@ -109,20 +109,77 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
           className="fixed inset-0 flex items-center justify-center z-50"
         >
           <div
-            className={`p-6 rounded-lg shadow-lg ${
+            className={`p-6 rounded-lg shadow-lg max-w-md w-full ${
               isDarkMode ? "bg-gray-800" : "bg-white"
             }`}
           >
             <h3
-              className={`text-lg font-bold mb-2 ${
+              className={`text-lg font-bold mb-4 ${
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              Login Successful!
+              Welcome back!
             </h3>
-            <p className={isDarkMode ? "text-gray-300" : "text-gray-600"}>
-              Redirecting to dashboard...
-            </p>
+
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <span
+                  className={isDarkMode ? "text-gray-300" : "text-gray-600"}
+                >
+                  Name:
+                </span>
+                <span className={isDarkMode ? "text-white" : "text-gray-900"}>
+                  {onLoginSuccess?.user?.name ||
+                    onLoginSuccess?.user?.email.split("@")[0]}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <span
+                  className={isDarkMode ? "text-gray-300" : "text-gray-600"}
+                >
+                  Email:
+                </span>
+                <span className={isDarkMode ? "text-white" : "text-gray-900"}>
+                  {onLoginSuccess?.user?.email}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <span
+                  className={isDarkMode ? "text-gray-300" : "text-gray-600"}
+                >
+                  Account Status:
+                </span>
+                <span
+                  className={isDarkMode ? "text-green-400" : "text-green-600"}
+                >
+                  {onLoginSuccess?.user?.isVerified
+                    ? "Verified"
+                    : "Not Verified"}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <span
+                  className={isDarkMode ? "text-gray-300" : "text-gray-600"}
+                >
+                  User ID:
+                </span>
+                <span
+                  className={isDarkMode ? "text-gray-400" : "text-gray-500"}
+                  style={{ fontSize: "0.8rem" }}
+                >
+                  {onLoginSuccess?.user?.id}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-gray-700">
+              <p className={isDarkMode ? "text-gray-300" : "text-gray-600"}>
+                Redirecting to dashboard...
+              </p>
+            </div>
           </div>
         </motion.div>
       )}

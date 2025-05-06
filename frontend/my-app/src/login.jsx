@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Lottie from "react-lottie-player";
 import animationData from "./loogin.json";
+import { useAuth } from "./auth";
 import axios from "axios";
 import { motion } from "framer-motion";
 
@@ -16,7 +17,7 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
   const [error, setError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const { checkAuthStatus } = useAuth();
   const navigate = useNavigate();
 
   // Configure axios to send credentials (cookies)
@@ -37,20 +38,22 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
 
     try {
       const response = await axios.post(
-        `https://graphx-yky3.onrender.com/login`,
-        {
-          email,
-          password,
-          rememberMe,
-        },
+        "https://graphx-yky3.onrender.com/login",
+        { email, password, rememberMe },
         {
           withCredentials: true,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
         }
       );
 
       if (response.data.success) {
         setShowSuccess(true);
-        onLoginSuccess(response.data.user); // Pass user data to parent
+        onLoginSuccess(response.data.user);
+        // Force a refresh of auth status
+        await checkAuthStatus();
         setTimeout(() => {
           navigate("/");
         }, 1500);

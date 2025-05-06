@@ -9,27 +9,31 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const checkAuthStatus = async () => {
-    try {
-      const response = await axios.get(
-        "https://graphx-yky3.onrender.com/auth/status",
-        {
-          withCredentials: true,
-        }
-      );
+ const checkAuthStatus = async () => {
+   try {
+     const response = await axios.get(
+       "https://graphx-yky3.onrender.com/auth/status",
+       {
+         withCredentials: true,
+         headers: {
+           Accept: "application/json",
+           "Content-Type": "application/json",
+         },
+       }
+     );
 
-      setIsAuthenticated(response.data.isAuthenticated);
-      if (response.data.user) {
-        setUserData(response.data.user);
-      }
-    } catch (error) {
-      console.error("Auth check error:", error);
-      setIsAuthenticated(false);
-      setUserData(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+     setIsAuthenticated(response.data.isAuthenticated);
+     if (response.data.user) {
+       setUserData(response.data.user);
+     }
+   } catch (error) {
+     console.error("Auth check error:", error);
+     setIsAuthenticated(false);
+     setUserData(null);
+   } finally {
+     setLoading(false);
+   }
+ };
 
   useEffect(() => {
     checkAuthStatus();

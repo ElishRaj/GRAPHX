@@ -52,6 +52,15 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
       if (response.data.success) {
         setShowSuccess(true);
         onLoginSuccess(response.data.user);
+
+        // Print login details to console
+        console.log("Login successful! User details:", {
+          email: email,
+          userId: response.data.user.id, // or whatever user identifier your API returns
+          name: response.data.user.name, // if available
+          timestamp: new Date().toISOString(),
+        });
+
         // Force a refresh of auth status
         await checkAuthStatus();
         setTimeout(() => {
@@ -66,7 +75,6 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
       setIsLoading(false);
     }
   };
-
   const handleGoogleLogin = () => {
     window.location.href = `https://graphx-yky3.onrender.com/auth/google`;
   };

@@ -19,7 +19,6 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { checkAuthStatus } = useAuth();
   const navigate = useNavigate();
-  console.log("lgoin       form is opnend")
   // Configure axios to send credentials (cookies)
   axios.defaults.withCredentials = true;
 
@@ -53,14 +52,6 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
         setShowSuccess(true);
         onLoginSuccess(response.data.user);
 
-        // Print login details to console
-        console.log("Login successful! User details:", {
-          email: email,
-          userId: response.data.user.id, // or whatever user identifier your API returns
-          name: response.data.user.name, // if available
-          timestamp: new Date().toISOString(),
-        });
-
         // Force a refresh of auth status
         await checkAuthStatus();
         setTimeout(() => {
@@ -91,17 +82,27 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
         );
 
         if (response.data.isAuthenticated) {
+          // Log the authentication details
+          console.log("User is already authenticated. Details:", {
+            userId: response.data.user.id, // or whatever unique identifier your user has
+            email: response.data.user.email, // if available
+            name: response.data.user.name, // if available
+            timestamp: new Date().toISOString(),
+            authStatus: response.data,
+          });
+
           onLoginSuccess(response.data.user);
           navigate("/home");
+        } else {
+          console.log("No active session found");
         }
       } catch (e) {
-        console.log("Not authenticated");
+        console.log("Authentication check failed:", e.message);
       }
     };
 
     checkAuth();
   }, [navigate, onLoginSuccess]);
-
   return (
     <div
       className={`fixed inset-0 flex items-center justify-center z-50 overflow-hidden ${

@@ -49,7 +49,7 @@ const corsOptions = {
   exposedHeaders: ["set-cookie"],
 };
 app.use(cors(corsOptions));
-
+app.options("*", cors(corsOptions)); 
 // Initialize Razorpay
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,

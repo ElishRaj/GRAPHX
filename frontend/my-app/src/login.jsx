@@ -126,7 +126,7 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              Login Successful! adfakfjaskfjakfjakfjaskfjakfjakafdaf
+              adfakfjaskfjakfjakfjaskfjakfjakafdaf
             </h3>
             <p className={isDarkMode ? "text-gray-300" : "text-gray-600"}>
               Redirecting to dashboard...

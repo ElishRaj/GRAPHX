@@ -19,7 +19,7 @@ const WelcomeBackForm = ({ isDarkMode, onLoginSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { checkAuthStatus } = useAuth();
   const navigate = useNavigate();
-
+  console.log("lgoin       form is opnend")
   // Configure axios to send credentials (cookies)
   axios.defaults.withCredentials = true;
 
